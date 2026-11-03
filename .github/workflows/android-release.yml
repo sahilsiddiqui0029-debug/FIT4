@@ -1,0 +1,46 @@
+name: Android Release Build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'fit4-frontend/mobile-app/**'
+      - '.github/workflows/android-release.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./fit4-frontend/mobile-app
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release --android-skip-build-dependency-validation
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fit4-release-apk
+          path: fit4-frontend/mobile-app/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7

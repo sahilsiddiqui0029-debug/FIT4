@@ -1,0 +1,37 @@
+name: Open-Source Security Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: fit4-web/marketing-site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: fit4-web/marketing-site
+        run: npm ci
+
+      - name: Security Vulnerability Audit
+        working-directory: fit4-web/marketing-site
+        run: npm audit --audit-level=high || true
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Swarm Unit Tests
+        run: python -m unittest discover -s fit4-agents/tests -p "test_*.py"

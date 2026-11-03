@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: fit4-backend
+    env: node
+    plan: free
+    rootDir: fit4-backend
+    buildCommand: npm install && npx prisma generate
+    startCommand: npx prisma migrate deploy && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      - key: DATABASE_URL
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false

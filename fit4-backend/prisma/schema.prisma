@@ -1,0 +1,133 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                  String          @id @default(uuid())
+  phone               String          @unique
+  region              String          @default("General")
+  city                String?         // For regional dietary nudging (e.g. Mumbai, Chennai)
+  
+  // Basic Demographics
+  name                String?
+  age                 Int?
+  sex                 String?
+  
+  // Anthropometrics
+  height              Float?          // cm
+  weight              Float?          // kg
+  goalWeight          Float?          // kg
+  waistCircumference  Float?          // cm
+  bodyFatPercentage   Float?          // %
+  
+  // Lifestyle & Baseline
+  activityLevel       String?         // e.g. SEDENTARY, LIGHT, MODERATE, VERY_ACTIVE
+  occupation          String?         // To gauge baseline NEAT (Non-Exercise Activity Thermogenesis)
+  sleepDuration       Float?          // hours/night average
+  stressLevel         String?         // LOW, MODERATE, HIGH
+  
+  // Clinical & Medical
+  condition           String?         // e.g. "Type 2 Diabetes · Hypertension"
+  medicalConditions   String[]        // Structured array of diagnosed conditions
+  medications         String[]
+  familyHistory       String?
+  
+  // Nutrition Preferences
+  dietaryRestrictions String[]
+  foodPreferences     String[]
+
+  createdAt           DateTime        @default(now())
+  
+  // Relations
+  healthLogs          HealthLog[]
+  subscription        Subscription?
+  deviceTokens        DeviceToken[]
+  adherenceLogs       AdherenceLog[]
+  recommendations     RecommendationHistory[]
+}
+
+/// FCM push tokens bound to a user (one user can have multiple devices)
+model DeviceToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique
+  platform  String   @default("android")  // android | ios
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+
+model HealthLog {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  type      String   // GLUCOSE | BP
+  value1    Float    // mg/dL or Systolic
+  value2    Float?   // Diastolic
+  source    String   @default("MANUAL")
+  createdAt DateTime @default(now())
+}
+
+model Subscription {
+  id                     String   @id @default(uuid())
+  userId                 String   @unique
+  user                   User     @relation(fields: [userId], references: [id])
+  tier                   String   @default("BASIC") // BASIC | PRO | PREMIUM
+  status                 String   @default("INACTIVE")
+  razorpaySubscriptionId String?  @unique
+  paymentStatus          String?  // CREATED | ACTIVE | HALTED
+  updatedAt              DateTime @updatedAt
+}
+
+/// CERT-In / DPDP Act access audit trail
+/// Every doctor access to patient data is logged here.
+model AuditLog {
+  id        String   @id @default(uuid())
+  actorId   String                          // doctorId or userId performing the action
+  action    String                          // e.g. VIEW_PATIENT_HISTORY
+  targetId  String?                         // patientId or resourceId accessed
+  ip        String   @default("unknown")
+  metadata  String?                         // JSON string — method, path, status
+  timestamp DateTime @default(now())
+
+  @@index([actorId, timestamp])
+  @@index([targetId, timestamp])
+}
+
+model AdherenceLog {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  date           DateTime @db.Date
+  caloriesLogged Int?
+  caloriesTarget Int?
+  proteinLogged  Int?
+  waterLogged    Float?   // Liters
+  sleepDuration  Float?
+  sleepQuality   String?  // POOR, FAIR, GOOD, EXCELLENT
+  stressLevel    String?
+  exerciseMins   Int?
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, date])
+}
+
+model RecommendationHistory {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  type           String   // MEAL, WORKOUT, SLEEP, HYDRATION
+  content        String
+  context        String?  // The data context that triggered it (e.g. JSON string of recent high glucose)
+  accepted       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}

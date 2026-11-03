@@ -1,0 +1,56 @@
+name: FIT4 God-Mode Autonomous Agent Swarm (24/7 Omnichannel Auto-Publisher)
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Runs automatically every 6 hours 24/7
+  workflow_dispatch:      # Allows manual trigger anytime from GitHub UI
+
+jobs:
+  run-god-mode-swarm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'fit4-agents/requirements.txt'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r fit4-agents/requirements.txt
+
+      - name: Execute God-Mode Omnichannel Swarm
+        env:
+          LARK_SMTP_SERVER: "smtp.larksuite.com"
+          LARK_SMTP_PORT: 465
+          LARK_SENDER_EMAIL: "agent@fit4.in"
+          LARK_SENDER_PASS: ${{ secrets.LARK_SENDER_PASS }}
+          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
+          ZENROWS_API_KEY: ${{ secrets.ZENROWS_API_KEY }}
+          SCRAPINGBEE_API_KEY: ${{ secrets.SCRAPINGBEE_API_KEY }}
+          APIFY_API_KEY: ${{ secrets.APIFY_API_KEY }}
+        run: |
+          python fit4-agents/crew.py
+
+      - name: Commit Telemetry & Social Queue Logs
+        run: |
+          git config --local user.email "agent@fit4.in"
+          git config --local user.name "FIT4 CrewAI Swarm Bot"
+          git add fit4-agents/swarm_telemetry.json fit4-agents/social_queue.json fit4-agents/generated_cards/ || true
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore(social): update 24/7 swarm social queue & telemetry [skip ci]" || true
+          git push || echo "Git push skipped - check workflow write permissions in Repository Settings"

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | FIT4</title>
+    <meta name="description" content="FIT4 Privacy Policy — compliant with the Digital Personal Data Protection Act 2026 and ABDM Health Data Management Policy.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Outfit', sans-serif; }
+        .prose h2 { font-size: 1.25rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: #1e293b; }
+        .prose h3 { font-size: 1rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #334155; }
+        .prose p, .prose li { font-size: 0.9rem; color: #475569; line-height: 1.75; margin-bottom: 0.75rem; }
+        .prose ul { list-style: disc; padding-left: 1.5rem; }
+        .prose table { width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-bottom: 1.5rem; }
+        .prose th { background: #f1f5f9; padding: 10px 14px; text-align: left; font-weight: 700; color: #334155; }
+        .prose td { padding: 10px 14px; border-top: 1px solid #f1f5f9; color: #475569; vertical-align: top; }
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
+        .lang-btn { transition: all 0.2s; }
+        .lang-btn.active { background: #2563eb; color: white; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-10 shadow-sm">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-black text-xs">F4</span>
+                </div>
+                <span class="font-bold text-slate-800">FIT4</span>
+            </div>
+            <!-- Language Switcher -->
+            <div class="flex gap-2">
+                <button onclick="setLang('en')"  class="lang-btn active px-3 py-1.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-600">English</button>
+                <button onclick="setLang('bn')"  class="lang-btn px-3 py-1.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-600">বাংলা</button>
+                <button onclick="setLang('pa')"  class="lang-btn px-3 py-1.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-600">ਪੰਜਾਬੀ</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+
+        <!-- Effective date + badge -->
+        <div class="mb-8">
+            <span class="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full border border-blue-200">DPDP Act 2026 Compliant</span>
+            <h1 class="text-3xl font-black text-slate-900 mt-4 mb-2">Privacy Policy</h1>
+            <p class="text-sm text-slate-500">Effective Date: <strong>April 15, 2026</strong> &nbsp;·&nbsp; Last Updated: <strong>April 15, 2026</strong></p>
+            <p class="text-sm text-slate-500 mt-1">Applicable Law: Digital Personal Data Protection Act, 2026 (India) &nbsp;·&nbsp; ABDM Health Data Management Policy v2.0</p>
+        </div>
+
+        <!-- ── ENGLISH ── -->
+        <div id="lang-en" class="lang-content active prose">
+            <p>This Privacy Policy describes how <strong>India Health Technologies Pvt. Ltd.</strong> ("India Health", "we", "us"), registered at IFBD, Salt Lake, Kolkata — 700 091, West Bengal, India, collects, processes, stores, and protects your personal data when you use the India Health-SaaS platform ("Service").</p>
+            <p>By using the Service, you provide <strong>free, informed, specific, and unambiguous consent</strong> to the practices described here, as required by Section 6 of the DPDP Act 2026.</p>
+
+            <h2>1. Data Controller & Data Protection Officer</h2>
+            <p>India Health Technologies Pvt. Ltd. is the <strong>Data Fiduciary</strong> under the DPDP Act 2026.</p>
+            <table>
+                <tr><th>Role</th><th>Name</th><th>Contact</th></tr>
+                <tr><td>Data Protection Officer</td><td>Appointed DPO</td><td>dpo@indiahealth.in</td></tr>
+                <tr><td>Grievance Officer</td><td>Legal Department</td><td>legal@indiahealth.in</td></tr>
+                <tr><td>Registered Address</td><td colspan="2">IFBD, Salt Lake, Kolkata — 700 091, West Bengal, India</td></tr>
+            </table>
+
+            <h2>2. Data We Collect</h2>
+            <table>
+                <tr><th>Category</th><th>Data Points</th><th>Purpose</th><th>Retention</th></tr>
+                <tr><td>Identity</td><td>Name, Phone, ABHA ID</td><td>Account creation, ABDM linking</td><td>Account lifetime + 5 years</td></tr>
+                <tr><td>Health Data (Sensitive)</td><td>Blood glucose, Blood pressure, Timestamp</td><td>Clinical monitoring, Trend analysis</td><td>7 years (PCPNDT mandated)</td></tr>
+                <tr><td>Device Data</td><td>OS version, App version, FCM token</td><td>Push notifications, Bug fixing</td><td>90 days</td></tr>
+                <tr><td>Usage Logs</td><td>API access logs, Timestamps</td><td>Security audit (CERT-In IS/IEC 27001)</td><td>1 year</td></tr>
+            </table>
+
+            <h2>3. Legal Bases for Processing</h2>
+            <ul>
+                <li><strong>Consent (DPDP Act §6):</strong> Health data processing requires and receives your explicit consent through our in-app consent flow.</li>
+                <li><strong>Legitimate Interest:</strong> Security monitoring, fraud prevention, system stability.</li>
+                <li><strong>Legal Obligation:</strong> Compliance with CERT-In directives, IT Act 2000, ABDM policies.</li>
+            </ul>
+
+            <h2>4. ABDM & Health Data Sharing</h2>
+            <p>We are an ABDM-integrated Health Information User (HIU). When a doctor requests your health records:</p>
+            <ul>
+                <li>You receive a push notification on your registered mobile app.</li>
+                <li>You must explicitly <strong>Approve or Deny</strong> the request. No data is shared without your approval.</li>
+                <li>Approved consents expire after <strong>7 days</strong> by default and can be revoked at any time from the Privacy & Permissions screen.</li>
+                <li>Data exchanged via ABDM is formatted as <strong>FHIR R4 Observation</strong> resources per NHA specification.</li>
+            </ul>
+
+            <h2>5. Data Security</h2>
+            <ul>
+                <li><strong>Encryption in transit:</strong> TLS 1.3 with HSTS. Certificate pinning in the mobile app.</li>
+                <li><strong>Encryption at rest:</strong> AES-256-GCM field-level encryption for phone and ABHA ID. Database-level encryption on AWS RDS Mumbai (ap-south-1).</li>
+                <li><strong>Access control:</strong> Phone numbers only shown to doctors with active, patient-approved ABDM consent.</li>
+                <li><strong>Audit logging:</strong> Every doctor access to patient data is logged per CERT-In IS/IEC 27001 requirements.</li>
+                <li><strong>Device security:</strong> The mobile app refuses to run on rooted or jailbroken devices.</li>
+                <li><strong>VAPT:</strong> Annual Vulnerability Assessment and Penetration Testing by a CERT-In empanelled auditor.</li>
+            </ul>
+
+            <h2>6. Your Rights (DPDP Act 2026)</h2>
+            <table>
+                <tr><th>Right</th><th>How to Exercise</th><th>Response Time</th></tr>
+                <tr><td>Right to Access (§11)</td><td>App → Profile → Download My Data</td><td>72 hours</td></tr>
+                <tr><td>Right to Correction (§12)</td><td>App → Support → Correct Data</td><td>30 days</td></tr>
+                <tr><td>Right to Erasure (§12)</td><td>App → Profile → Delete Account</td><td>30 days</td></tr>
+                <tr><td>Right to Nominate (§14)</td><td>Email dpo@indiahealth.in</td><td>30 days</td></tr>
+                <tr><td>Right to Grievance (§13)</td><td>Email legal@indiahealth.in</td><td>30 days; appeal to DPBI</td></tr>
+            </table>
+
+            <h2>7. Data Localisation</h2>
+            <p>All personal data and health data is stored exclusively within India on AWS Mumbai (ap-south-1) region. We do not transfer health data outside India.</p>
+
+            <h2>8. Cookies & Analytics</h2>
+            <p>We use first-party session cookies for authentication. We do not use third-party advertising cookies. No personal health data is ever shared with analytics platforms.</p>
+
+            <h2>9. Children's Privacy</h2>
+            <p>Our service is not intended for persons under 18 years of age. For family member monitoring (minors), parental consent must be provided through our Family Care feature.</p>
+
+            <h2>10. Changes to This Policy</h2>
+            <p>We will notify you of material changes via in-app notification and email at least <strong>15 days</strong> before they take effect, as required by DPDP Act §7.</p>
+
+            <h2>11. Contact</h2>
+            <p>For any privacy concerns: <a href="mailto:dpo@indiahealth.in" class="text-blue-600 underline">dpo@indiahealth.in</a><br>
+            India Health Technologies Pvt. Ltd., IFBD, Salt Lake, Kolkata — 700 091</p>
+        </div>
+
+        <!-- ── BENGALI ── -->
+        <div id="lang-bn" class="lang-content prose">
+            <p>এই গোপনীয়তা নীতিটি বর্ণনা করে যে <strong>ইন্ডিয়া হেলথ টেকনোলজিস প্রাইভেট লিমিটেড</strong> ("ইন্ডিয়া হেলথ"), আইএফবিডি, সল্টলেক, কলকাতা — ৭০০ ০৯১ তে নিবন্ধিত, কীভাবে আপনার ব্যক্তিগত তথ্য সংগ্রহ, প্রক্রিয়া, সংরক্ষণ এবং সুরক্ষা করে।</p>
+            <h2>আপনার অধিকার (ডিপিডিপি আইন ২০২৬)</h2>
+            <ul>
+                <li><strong>তথ্য অ্যাক্সেস করার অধিকার:</strong> অ্যাপ → প্রোফাইল → আমার তথ্য ডাউনলোড করুন</li>
+                <li><strong>তথ্য সংশোধনের অধিকার:</strong> অ্যাপ → সহায়তা → তথ্য সংশোধন করুন</li>
+                <li><strong>তথ্য মুছে ফেলার অধিকার:</strong> অ্যাপ → প্রোফাইল → অ্যাকাউন্ট মুছুন</li>
+                <li><strong>অভিযোগের অধিকার:</strong> legal@indiahealth.in এ ইমেইল করুন</li>
+            </ul>
+            <h2>স্বাস্থ্য ডেটা শেয়ার</h2>
+            <p>আপনার ডেটা শুধুমাত্র আপনার স্পষ্ট অনুমোদনের পরেই ডাক্তারের সাথে শেয়ার করা হয়। আপনি যেকোনো সময় অনুমোদন প্রত্যাহার করতে পারেন।</p>
+            <h2>ডেটা সুরক্ষা</h2>
+            <ul>
+                <li>আপনার ফোন নম্বর এবং ABHA ID AES-256-GCM এনক্রিপশন দিয়ে সুরক্ষিত।</li>
+                <li>সমস্ত ডেটা ভারতে (AWS মুম্বাই) সংরক্ষিত।</li>
+            </ul>
+            <h2>যোগাযোগ</h2>
+            <p>গোপনীয়তা উদ্বেগের জন্য: <a href="mailto:dpo@indiahealth.in" class="text-blue-600 underline">dpo@indiahealth.in</a><br>
+            ইন্ডিয়া হেলথ টেকনোলজিস, আইএফবিডি, সল্টলেক, কলকাতা — ৭০০ ০৯১</p>
+        </div>
+
+        <!-- ── PUNJABI ── -->
+        <div id="lang-pa" class="lang-content prose">
+            <p>ਇਹ ਗੋਪਨੀਯਤਾ ਨੀਤੀ ਦੱਸਦੀ ਹੈ ਕਿ <strong>ਇੰਡੀਆ ਹੈਲਥ ਟੈਕਨੋਲੋਜੀਜ਼ ਪ੍ਰਾਈਵੇਟ ਲਿਮਿਟੇਡ</strong>, ਆਈਐਫਬੀਡੀ, ਸਾਲਟ ਲੇਕ, ਕੋਲਕਾਤਾ — 700 091 ਵਿਖੇ ਰਜਿਸਟਰਡ, ਤੁਹਾਡਾ ਨਿੱਜੀ ਡੇਟਾ ਕਿਵੇਂ ਇਕੱਤਰ, ਪ੍ਰੋਸੈਸ, ਸਟੋਰ ਅਤੇ ਸੁਰੱਖਿਅਤ ਕਰਦੀ ਹੈ।</p>
+            <h2>ਤੁਹਾਡੇ ਅਧਿਕਾਰ (ਡੀਪੀਡੀਪੀ ਐਕਟ 2026)</h2>
+            <ul>
+                <li><strong>ਡੇਟਾ ਦੇਖਣ ਦਾ ਅਧਿਕਾਰ:</strong> ਐਪ → ਪ੍ਰੋਫਾਈਲ → ਮੇਰਾ ਡੇਟਾ ਡਾਊਨਲੋਡ ਕਰੋ</li>
+                <li><strong>ਡੇਟਾ ਠੀਕ ਕਰਨ ਦਾ ਅਧਿਕਾਰ:</strong> ਐਪ → ਸਹਾਇਤਾ → ਡੇਟਾ ਠੀਕ ਕਰੋ</li>
+                <li><strong>ਡੇਟਾ ਮਿਟਾਉਣ ਦਾ ਅਧਿਕਾਰ:</strong> ਐਪ → ਪ੍ਰੋਫਾਈਲ → ਖਾਤਾ ਮਿਟਾਓ</li>
+                <li><strong>ਸ਼ਿਕਾਇਤ ਦਾ ਅਧਿਕਾਰ:</strong> legal@indiahealth.in 'ਤੇ ਈਮੇਲ ਕਰੋ</li>
+            </ul>
+            <h2>ਸਿਹਤ ਡੇਟਾ ਸ਼ੇਅਰਿੰਗ</h2>
+            <p>ਤੁਹਾਡਾ ਡੇਟਾ ਸਿਰਫ਼ ਤੁਹਾਡੀ ਸਪੱਸ਼ਟ ਮਨਜ਼ੂਰੀ ਤੋਂ ਬਾਅਦ ਡਾਕਟਰ ਨਾਲ ਸਾਂਝਾ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।</p>
+            <h2>ਡੇਟਾ ਸੁਰੱਖਿਆ</h2>
+            <ul>
+                <li>ਤੁਹਾਡਾ ਫ਼ੋਨ ਨੰਬਰ ਅਤੇ ABHA ID AES-256-GCM ਐਨਕ੍ਰਿਪਸ਼ਨ ਨਾਲ ਸੁਰੱਖਿਅਤ ਹੈ।</li>
+                <li>ਸਾਰਾ ਡੇਟਾ ਭਾਰਤ ਵਿੱਚ (AWS ਮੁੰਬਈ) ਸਟੋਰ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।</li>
+            </ul>
+            <h2>ਸੰਪਰਕ</h2>
+            <p>ਗੋਪਨੀਯਤਾ ਚਿੰਤਾਵਾਂ ਲਈ: <a href="mailto:dpo@indiahealth.in" class="text-blue-600 underline">dpo@indiahealth.in</a><br>
+            ਇੰਡੀਆ ਹੈਲਥ ਟੈਕਨੋਲੋਜੀਜ਼, ਆਈਐਫਬੀਡੀ, ਸਾਲਟ ਲੇਕ, ਕੋਲਕਾਤਾ — 700 091</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 mt-16">
+        <div class="max-w-4xl mx-auto px-6 text-sm">
+            <div class="flex flex-wrap justify-between gap-6">
+                <div>
+                    <p class="font-bold text-white mb-2">India Health Technologies Pvt. Ltd.</p>
+                    <p>IFBD, Salt Lake, Kolkata — 700 091</p>
+                    <p>West Bengal, India</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-slate-300 mb-2">Support</p>
+                    <p><a href="mailto:support@indiahealth.in" class="hover:text-white">support@indiahealth.in</a></p>
+                    <p><a href="mailto:dpo@indiahealth.in" class="hover:text-white">dpo@indiahealth.in</a></p>
+                </div>
+                <div>
+                    <p class="font-semibold text-slate-300 mb-2">Legal</p>
+                    <p><a href="/legal/privacy.html" class="hover:text-white">Privacy Policy</a></p>
+                    <p><a href="/legal/terms.html" class="hover:text-white">Terms & Conditions</a></p>
+                    <p><a href="/pricing.html" class="hover:text-white">Pricing</a></p>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-6 text-center text-xs text-slate-600">
+                © 2026 India Health Technologies Pvt. Ltd. · CIN: U72900WB2026PTC000000 · DPDP Compliant · ABDM Integrated
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function setLang(lang) {
+            document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

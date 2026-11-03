@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: fit4-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npx prisma generate
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      - key: OPENROUTER_API_KEY
+        sync: false

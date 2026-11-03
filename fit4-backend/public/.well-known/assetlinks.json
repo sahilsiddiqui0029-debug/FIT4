@@ -1,0 +1,17 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "in.fit4",
+      "sha256_cert_fingerprints": [
+        "6A:3A:7A:B8:77:80:A1:0B:63:FD:B4:E6:53:52:7A:D0:20:65:DB:ED:99:BC:00:45:42:BB:FB:C8:65:11:51:DD",
+        "42:DE:23:02:06:90:FB:4B:77:59:0D:45:26:E4:90:7C:41:FE:F7:1F:6A:DD:B0:4F:0A:4D:9F:F0:DC:4A:E0:40",
+        "69:94:D4:F3:13:07:EB:7E:5C:92:59:D8:C1:EB:EA:EA:3E:43:CC:9B:FD:5B:06:FD:77:8B:2B:04:BC:C9:76:A4"
+      ]
+    }
+  }
+]
