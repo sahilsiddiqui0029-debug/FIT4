@@ -170,9 +170,22 @@ app.post('/api/v1/payment/webhook', express.raw({ type: 'application/json', limi
 
 app.use(express.json({ limit: '2mb' }));
 
+// Unregister any legacy service workers and flush client cache
+app.get(['/sw.js', '/service-worker.js', '/flutter_service_worker.js'], (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.setHeader('Clear-Site-Data', '"cache", "storage"');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    res.send('self.addEventListener("install", () => self.skipWaiting()); self.registration.unregister();');
+});
+
 // Redirect root to the official production marketing and clinical web portal (https://fit4.in)
+// Sends Clear-Site-Data to flush any stale PWA cache, service workers, and local storage on client browsers
 app.get(['/', '/index.html'], (req, res) => {
-    res.redirect(301, 'https://fit4.in');
+    res.setHeader('Clear-Site-Data', '"cache", "storage"');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    res.status(301);
+    res.setHeader('Location', 'https://fit4.in');
+    res.send(`<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=https://fit4.in"><script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>{for(let r of rs)r.unregister();});}localStorage.clear();sessionStorage.clear();window.location.replace('https://fit4.in');</script></head><body>Redirecting to <a href="https://fit4.in">https://fit4.in</a>...</body></html>`);
 });
 
 // Serve other static assets (.well-known, legal docs, compliance) without intercepting root
