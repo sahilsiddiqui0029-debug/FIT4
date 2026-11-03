@@ -1037,26 +1037,28 @@ if (Sentry && typeof Sentry.setupExpressErrorHandler === 'function') {
 
 const PORT = parseInt(process.env.PORT, 10) || 5000;
 const HOST = '0.0.0.0';
-if (require.main === module) {
-  const server = app.listen(PORT, HOST, () => {
-    console.log(`FIT4 API primary server running on http://${HOST}:${PORT}`);
-  });
-  server.on('error', (err) => {
-    console.error('[FATAL Primary Server Error]:', err);
-  });
 
-  if (PORT !== 5000) {
-    try {
-      const serverFallback = app.listen(5000, HOST, () => {
-        console.log(`FIT4 API secondary server running on http://${HOST}:5000`);
-      });
-      serverFallback.on('error', (err) => {
-        console.warn('[Port 5000 note]:', err.message);
-      });
-    } catch (e) {
-      console.warn('[Port 5000 fallback bypassed]:', e.message);
-    }
+const server = app.listen(PORT, HOST, () => {
+  console.log(`[READY] FIT4 API server listening on http://${HOST}:${PORT}`);
+});
+server.on('error', (err) => {
+  console.error('[FATAL Primary Server Error]:', err);
+});
+
+if (PORT !== 5000) {
+  try {
+    const fallbackServer = app.listen(5000, HOST, () => {
+      console.log(`[READY] FIT4 API secondary listener on http://${HOST}:5000`);
+    });
+    fallbackServer.on('error', (err) => {
+      console.warn('[Port 5000 Info]:', err.message);
+    });
+  } catch (e) {
+    console.warn('[Port 5000 fallback bypassed]:', e.message);
   }
 }
+
+// Keep event loop permanently active
+setInterval(() => {}, 60000);
 
 module.exports = app;
