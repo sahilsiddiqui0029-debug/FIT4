@@ -1,8 +1,8 @@
 # Build Stage
 FROM node:20-bookworm-slim
 
-# Install OpenSSL required by Prisma on Debian
-RUN apt-get update && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+# Install OpenSSL and curl for internal healthcheck
+RUN apt-get update && apt-get install -y openssl ca-certificates curl && rm -rf /var/lib/apt/lists/*
 
 # Set Working Directory
 WORKDIR /app
@@ -21,7 +21,7 @@ ENV PORT=5000
 # Prisma Client Generation
 RUN npx prisma generate
 
-EXPOSE 5000
+EXPOSE 5000 10000
 
 # Start Server
 CMD ["node", "server.js"]

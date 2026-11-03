@@ -1,3 +1,11 @@
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL Boot Exception]:', err && err.stack ? err.stack : err);
+});
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[FATAL Boot Rejection]:', reason);
+});
+console.log('[BOOT] Starting FIT4 Backend Process on Node ' + process.version);
+
 require('dotenv').config();
 
 let Sentry = null;
@@ -1023,13 +1031,6 @@ app.post(['/api/fit4/triage', '/api/fit4/food-triage'], healthLogLimiter, async 
   });
 });
 
-process.on('uncaughtException', (err) => {
-  console.error('[FATAL] Uncaught Exception:', err);
-});
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('[FATAL] Unhandled Rejection:', reason);
-});
-
 if (Sentry && typeof Sentry.setupExpressErrorHandler === 'function') {
   Sentry.setupExpressErrorHandler(app);
 }
@@ -1038,11 +1039,24 @@ const PORT = parseInt(process.env.PORT, 10) || 5000;
 const HOST = '0.0.0.0';
 if (require.main === module) {
   const server = app.listen(PORT, HOST, () => {
-    console.log(`FIT4 API running on http://${HOST}:${PORT}`);
+    console.log(`FIT4 API primary server running on http://${HOST}:${PORT}`);
   });
   server.on('error', (err) => {
-    console.error('[FATAL Server Error]:', err);
+    console.error('[FATAL Primary Server Error]:', err);
   });
+
+  if (PORT !== 5000) {
+    try {
+      const serverFallback = app.listen(5000, HOST, () => {
+        console.log(`FIT4 API secondary server running on http://${HOST}:5000`);
+      });
+      serverFallback.on('error', (err) => {
+        console.warn('[Port 5000 note]:', err.message);
+      });
+    } catch (e) {
+      console.warn('[Port 5000 fallback bypassed]:', e.message);
+    }
+  }
 }
 
 module.exports = app;
