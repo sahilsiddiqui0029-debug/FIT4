@@ -12,7 +12,6 @@
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "@sentry/node": "^10.68.0",
-    "@sentry/profiling-node": "^10.68.0",
     "axios": "^1.6.8",
     "cors": "^2.8.6",
     "dotenv": "^16.4.5",
