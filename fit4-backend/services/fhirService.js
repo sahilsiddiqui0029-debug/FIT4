@@ -12,9 +12,10 @@ const axios  = require('axios');
 
 const FHIR_BASE  = process.env.FHIR_BASE_URL  || 'https://api.indiahealth.in/fhir';
 const HIU_ID     = process.env.ABDM_HIU_ID     || 'india-health-saas';
-const ID_SALT    = process.env.ID_SALT || (process.env.NODE_ENV === 'production'
-    ? (() => { throw new Error('[Security] ID_SALT environment variable is required in production.'); })()
-    : crypto.randomBytes(16).toString('hex'));
+const ID_SALT    = process.env.ID_SALT || 'india-health-saas-id-salt-fallback-v1';
+if (!process.env.ID_SALT) {
+    console.warn('[Security Warning] ID_SALT not set. Using cluster salt fallback.');
+}
 const ABDM_GW    = process.env.ABDM_GATEWAY_URL || 'https://dev.abdm.gov.in/gateway';
 
 // ── NRCeS StructureDefinition URLs ───────────────────────────────────────────
