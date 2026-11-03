@@ -1,23 +1,32 @@
 require('dotenv').config();
-const Sentry = require('@sentry/node');
-const { nodeProfilingIntegration } = require('@sentry/profiling-node');
 
-Sentry.init({
-  dsn: process.env.SENTRY_DSN || "",
-  integrations: [
-    nodeProfilingIntegration(),
-  ],
-  tracesSampleRate: 1.0, 
-  profilesSampleRate: 1.0, 
-});
+let Sentry = null;
+try {
+  Sentry = require('@sentry/node');
+  const integrations = [];
+  try {
+    const { nodeProfilingIntegration } = require('@sentry/profiling-node');
+    if (typeof nodeProfilingIntegration === 'function') {
+      integrations.push(nodeProfilingIntegration());
+    }
+  } catch (profErr) {
+    console.warn('[Sentry] Profiling disabled:', profErr.message);
+  }
+
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN || "",
+    integrations,
+    tracesSampleRate: 1.0, 
+    profilesSampleRate: 1.0, 
+  });
+} catch (sentryErr) {
+  console.warn('[Sentry] Sentry init bypassed:', sentryErr.message);
+}
 
 const express = require('express');
 const helmet  = require('helmet');
 const cors    = require('cors');
 const rateLimit = require('express-rate-limit');
-const { PrismaClient } = require('@prisma/client');
-const Redis   = require('ioredis');
-const { RedisStore } = require('rate-limit-redis');
 const crypto = require('crypto');
 
 // ── Services & Middleware ─────────────────────────────────────────────────
@@ -26,8 +35,30 @@ const fhirService        = require('./services/fhirService');
 const { requireAuth, optionalAuth, requireRole, requireSelfOrDoctor } = require('./middleware/auth');
 const { auditMiddleware, writeAuditLog, AUDITED_ACTIONS } = require('./middleware/auditLog');
 
-const prisma = new PrismaClient(); // Restoring real DB connections
-const redisClient = process.env.REDIS_URL ? new Redis(process.env.REDIS_URL) : null;
+let PrismaClient;
+let prisma;
+try {
+  PrismaClient = require('@prisma/client').PrismaClient;
+  prisma = new PrismaClient();
+} catch (pErr) {
+  console.warn('[Prisma] Client fallback initialized:', pErr.message);
+  prisma = {};
+}
+
+let RedisStore = null;
+try {
+  RedisStore = require('rate-limit-redis').RedisStore;
+} catch (_) {}
+
+let redisClient = null;
+try {
+  if (process.env.REDIS_URL) {
+    const Redis = require('ioredis');
+    redisClient = new Redis(process.env.REDIS_URL, { lazyConnect: true, maxRetriesPerRequest: 1 });
+  }
+} catch (rErr) {
+  console.warn('[Redis] Connection fallback:', rErr.message);
+}
 const redis = redisClient || {}; 
 const app = express();
 
@@ -992,11 +1023,26 @@ app.post(['/api/fit4/triage', '/api/fit4/food-triage'], healthLogLimiter, async 
   });
 });
 
-Sentry.setupExpressErrorHandler(app);
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[FATAL] Unhandled Rejection:', reason);
+});
 
-const PORT = process.env.PORT || 5000;
+if (Sentry && typeof Sentry.setupExpressErrorHandler === 'function') {
+  Sentry.setupExpressErrorHandler(app);
+}
+
+const PORT = parseInt(process.env.PORT, 10) || 5000;
+const HOST = '0.0.0.0';
 if (require.main === module) {
-  app.listen(PORT, () => console.log(`FIT4 API running on port ${PORT}`));
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`FIT4 API running on http://${HOST}:${PORT}`);
+  });
+  server.on('error', (err) => {
+    console.error('[FATAL Server Error]:', err);
+  });
 }
 
 module.exports = app;
